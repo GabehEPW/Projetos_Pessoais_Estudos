@@ -1,4 +1,3 @@
-# Classe que representa uma carta
 class Card:
 
     # Construtor da carta
