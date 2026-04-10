@@ -1,10 +1,10 @@
 class Card:
-    # Representa UMA carta do baralho
+    # Representa UMA carta
 
     def __init__(self, suit, rank):
-        self.suit = suit   # Naipe (Copas, Espadas...)
-        self.rank = rank   # Valor (2, 3, J, A...)
+        self.suit = suit  # Naipe
+        self.rank = rank  # Valor
 
     def __str__(self):
-        # Define como a carta aparece ao dar print()
+        # Como a carta aparece no print
         return f"{self.rank} de {self.suit}"

@@ -1,52 +1,44 @@
-from deck import Deck
 from player import Player
 from bot import Bot
+from game import Game
 
-# Criar e embaralhar baralho
-deck = Deck()
-deck.shuffle()
+# Criar jogadores
+player = Player("Você")
 
-initial_balance = 25
-
-# Criar jogador
-player = Player("Jogador", balance=initial_balance)
-
-# Criar bots
 bots = [
-    Bot("Bot 1", balance=initial_balance),
-    Bot("Bot 2", balance=initial_balance),
-    Bot("Bot 3", balance=initial_balance),
-    Bot("Bot 4", balance=initial_balance)
+    Bot("Bot 1"),
+    Bot("Bot 2"),
+    Bot("Bot 3"),
 ]
 
 players = [player] + bots
 
-# Distribuir 2 cartas para cada jogador
-for _ in range(2):
-    for p in players:
-        p.receive_card(deck.draw())
+# Criar jogo
+game = Game(players)
 
-# Mostrar cartas do jogador
+# Distribuir cartas
+game.deal_cards()
+
+# Mostrar mão do jogador
 player.show_hand()
 
-# Rodada de apostas
-current_max = 0
+# PRÉ-FLOP
+print("\n--- PRÉ-FLOP ---")
+game.betting_round()
 
-bet = player.make_bet(current_max)
-player_action = player.last_action  # ✅ agora funciona
+# FLOP
+print("\n--- FLOP ---")
+game.flop()
+game.betting_round()
 
-# Atualiza maior aposta
-if player.current_bet > current_max:
-    current_max = player.current_bet
+# TURN
+print("\n--- TURN ---")
+game.turn()
+game.betting_round()
 
-# Bots jogam
-for bot in bots:
-    bet, action = bot.make_move(current_max, player_action)
+# RIVER
+print("\n--- RIVER ---")
+game.river()
+game.betting_round()
 
-    if bot.current_bet > current_max:
-        current_max = bot.current_bet
-
-# Mostrar saldo final
-print("\nSaldo após a rodada:")
-for p in players:
-    print(f"{p.name}: R${p.balance}")
+print("\nFim da rodada!")
